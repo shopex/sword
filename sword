@@ -1,5 +1,26 @@
 #!/usr/bin/env php
 <?php
-echo "now start";
+
+$composer_installed = false;
+foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
+    if (file_exists($file)) {
+        $composer_installed = $file;
+        break;
+    }
+}
+if ($composer_installed === false) {
+    fwrite(STDERR,
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'wget http://getcomposer.org/composer.phar' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+    die(1);
+}
+
+//require_once(__DIR__ . '/src/Swoole/Server.php');
+$server = new Sword\Swoole\Server([]);
+$server->start();
+
+
 
 

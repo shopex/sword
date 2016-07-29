@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Onex\\Sword\\": "src"
+            "Sword\\": "src"
         }
     },
     "minimum-stability": "dev",
