@@ -1,5 +1,5 @@
 <?php
-namespace \Onex\Sword\Swoole;
+namespace Sword\Swoole;
 
 use Illuminate\Http\Request as IlluminateRequest;
 use Symfony\Component\HttpFoundation\Response;

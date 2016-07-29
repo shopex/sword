@@ -5,6 +5,7 @@ $composer_installed = false;
 foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
     if (file_exists($file)) {
         $composer_installed = $file;
+        require $file;
         break;
     }
 }
@@ -17,8 +18,8 @@ if ($composer_installed === false) {
     die(1);
 }
 
-//require_once(__DIR__ . '/src/Swoole/Server.php');
-$server = new Sword\Swoole\Server([]);
+require_once(__DIR__ . '/src/Swoole/Server.php');
+$server = new \Sword\Swoole\Server([]);
 $server->start();
 
 
