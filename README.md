@@ -1,5 +1,9 @@
 # sword
 
+## Notice
+
+ - [注意事项](doc/notice.md)
+
 ## installed
 
 ```shell
