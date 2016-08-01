@@ -18,10 +18,19 @@ if ($composer_installed === false) {
     die(1);
 }
 
+$config = getConf($composer_installed);
 require_once(__DIR__ . '/src/Swoole/Server.php');
-$server = new \Sword\Swoole\Server([]);
+$server = new \Sword\Swoole\Server($config);
 $server->start();
 
 
+function getConf($autoloadFilePath)
+{
+    $config = [
+
+    ];
+
+    return $config;
+}
 
 

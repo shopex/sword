@@ -28,9 +28,19 @@ class Server{
         $illuminate_request  = $this->dealWithRequest($request);
 
 
-        $illuminate_response = $this->lumen->dispatch($illuminate_request);
+        try{
+            $illuminate_response = $this->lumen->dispatch($illuminate_request);
+            $this->dealWithResponse( $response, $illuminate_response);
+            throw new \Exception('aewf');
+        }catch(\Exception $e){
+            fwrite(STDOUT, $e->getMessage() . "\n");
+        }finally{
+            if (count($this->lumen->getMiddleware()) > 0) {
+                $this->lumen->callTerminableMiddleware($illuminate_response);
+            }
+        }
 
-        return $this->dealWithResponse( $response, $illuminate_response);
+
     }
 
     public function start()
