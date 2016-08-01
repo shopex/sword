@@ -18,16 +18,19 @@ if ($composer_installed === false) {
     die(1);
 }
 
-$config = getConf($composer_installed);
 require_once(__DIR__ . '/src/Swoole/Server.php');
-$server = new \Sword\Swoole\Server($config);
+$app = require_once(__DIR__ . '/../../../bootstrap/app.php');
+$config = getConf();
+$setting = []; //预留
+
+$server = new \Sword\Swoole\Server($config, $setting, $app);
 $server->start();
 
-
-function getConf($autoloadFilePath)
+function getConf()
 {
     $config = [
-
+        'host' => env('SWORD_HOST', '0.0.0.0'),
+        'port' => env('SWORD_PORT', 8088),
     ];
 
     return $config;

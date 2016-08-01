@@ -6,32 +6,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Server{
     private $http_server = null;
-    private $http_host = '0.0.0.0';
-    private $http_port = 8088;
     private $_SERVER = [];
 
-    public function __construct($config)
+    public function __construct($config = [], $setting = [], $app)
     {
-        $this->init($config);
+        $this->init($config, $setting, $app);
     }
 
-    public function init($config)
+    public function init($config, $setting, $app)
     {
-        $this->http_server = new \swoole_http_server($this->http_host, $this->http_port);
+        $this->http_server = new \swoole_http_server($config['host'], $config['port']);
         $this->http_server->on('Request', [$this, 'onRequest']);
-        $this->lumen = require_once(__DIR__ . '/../../../../../bootstrap/app.php');
+        $this->lumen = $app;
     }
 
     public function onRequest($request, $response)
     {
-
         $illuminate_request  = $this->dealWithRequest($request);
-
 
         try{
             $illuminate_response = $this->lumen->dispatch($illuminate_request);
             $this->dealWithResponse( $response, $illuminate_response);
-            throw new \Exception('aewf');
         }catch(\Exception $e){
             fwrite(STDOUT, $e->getMessage() . "\n");
         }finally{
@@ -39,8 +34,6 @@ class Server{
                 $this->lumen->callTerminableMiddleware($illuminate_response);
             }
         }
-
-
     }
 
     public function start()
@@ -50,7 +43,6 @@ class Server{
 
     private function dealWithRequest($request)
     {
-
         $get    = isset($request->get) ? $request->get : array();
         $post   = isset($request->post) ? $request->post : array();
         $cookie = isset($request->cookie) ? $request->cookie : array();
@@ -110,9 +102,6 @@ class Server{
 
         $response->end($content);
     }
-
-
-
 
 }
 
