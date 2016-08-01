@@ -37,3 +37,7 @@ $app = new App\Application(
 ```shell
 vendor/bin/sword
 ```
+
+## config
+
+ - [配置信息](doc/config.md)
