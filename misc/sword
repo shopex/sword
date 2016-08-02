@@ -31,8 +31,6 @@ fi
 
 RETVAL=0
 prog="sword"
-pidfile=${PIDFILE-/home/elrond/cms/sword.pid}
-lockfile=${LOCKFILE-/home/elrond/cms/sword}
 binfile=/home/elrond/cms/vendor/bin/sword
 phpbin=/usr/local/php56/bin/php
 runuser=elrond
@@ -40,9 +38,7 @@ appkey=032aef3271ec75e661805d0edf791b93
 
 start () {
 	echo -n $"Starting $prog... "
-	dir=$(dirname ${pidfile})
-	[ -d $dir ] || mkdir $dir
-	daemon --user ${runuser} "$phpbin $binfile ${appkey} --daemonize yes --pidfile $pidfile" &
+	daemon --user ${runuser} "$phpbin $binfile ${appkey} --daemonize yes" &
 }
 stop () {
 	echo -n $"Stopping $prog... "
