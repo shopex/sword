@@ -1,0 +1,83 @@
+#! /bin/sh
+#
+# chkconfig: - 84 16
+# description:	PHP FastCGI Process Manager
+# processname: php-fpm
+# config: /etc/php-fpm.conf
+# config: /etc/sysconfig/php-fpm
+# pidfile: /var/run/php-fpm/php-fpm.pid
+#
+### BEGIN INIT INFO
+# Provides: php-fpm
+# Required-Start: $local_fs $remote_fs $network $named
+# Required-Stop: $local_fs $remote_fs $network
+# Short-Description: start and stop PHP FPM
+# Description: PHP FastCGI Process Manager
+### END INIT INFO
+
+# Standard LSB functions
+#. /lib/lsb/init-functions
+
+# Source function library.
+. /etc/init.d/functions
+
+# Check that networking is up.
+. /etc/sysconfig/network
+
+if [ "$NETWORKING" = "no" ]
+then
+	exit 0
+fi
+
+RETVAL=0
+prog="sword"
+pidfile=${PIDFILE-/home/elrond/cms/sword.pid}
+lockfile=${LOCKFILE-/home/elrond/cms/sword}
+binfile=/home/elrond/cms/vendor/bin/sword
+phpbin=/usr/local/php56/bin/php
+runuser=elrond
+appkey=032aef3271ec75e661805d0edf791b93
+
+start () {
+	echo -n $"Starting $prog... "
+	dir=$(dirname ${pidfile})
+	[ -d $dir ] || mkdir $dir
+	daemon --user ${runuser} "$phpbin $binfile ${appkey} --daemonize yes --pidfile $pidfile" &
+}
+stop () {
+	echo -n $"Stopping $prog... "
+	NAME=${appkey}
+	ID=`ps -ef | grep "$NAME" | grep -v "grep" | awk '{print $2}'`
+	for id in $ID
+	do
+		kill -9 $id
+	done
+}
+
+restart () {
+        stop
+        start
+}
+
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  status)
+	status -p ${pidfile} sword
+	RETVAL=$?
+	;;
+  restart)
+	restart
+	;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart}"
+        exit 2
+esac
+
+exit $RETVAL
