@@ -1,22 +1,5 @@
 #! /bin/sh
 #
-# chkconfig: - 84 16
-# description:	PHP FastCGI Process Manager
-# processname: php-fpm
-# config: /etc/php-fpm.conf
-# config: /etc/sysconfig/php-fpm
-# pidfile: /var/run/php-fpm/php-fpm.pid
-#
-### BEGIN INIT INFO
-# Provides: php-fpm
-# Required-Start: $local_fs $remote_fs $network $named
-# Required-Stop: $local_fs $remote_fs $network
-# Short-Description: start and stop PHP FPM
-# Description: PHP FastCGI Process Manager
-### END INIT INFO
-
-# Standard LSB functions
-#. /lib/lsb/init-functions
 
 # Source function library.
 . /etc/init.d/functions
