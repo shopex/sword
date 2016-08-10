@@ -1,5 +1,11 @@
 # sword
 
+## Summary (简述)
+
+ Sword is a tool used on lumen. It allows the lumen to run in memory. Each request is only to be used for the Controller class, and no need to initialize the entire framework, which greatly improve the performance of the high performance.
+ 
+ Sword 是用在lumen上的一个工具。它可以使lumen常驻运行内存中。每次请求都只实例化Controller等类，而不需要初始化整个框架，从而大幅度提运行高性能。
+
 ## Notice
 
  - [注意事项](doc/notice.md)
